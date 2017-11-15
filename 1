@@ -1,0 +1,29 @@
+导入 smtplib
+导入 email.mime.multipart
+导入 email.mime.text
+进口时间
+def  sleeptime（min，sec）：
+    返回 最小* 60 +秒;
+第二=休眠时间（0，3）;
+而 1  ==  1：
+    time.sleep（秒）;
+    count =  0
+    而   （数字<  999999）：
+        msg = email.mime.multipart.MIMEMultipart（）
+        MSG [ '从' ] =  ' nycht@sina.com '
+        MSG [ '到' ] =  ' 552010694@qq.com '
+        msg [ ' subject ' ] =  ' emmmmm '
+        内容=  ''' ''
+        emmmmm
+        “””
+        txt = email.mime.text.MIMEText（content）
+        msg.attach（TXT）
+        smtp = smtplib
+        smtp = smtplib.SMTP（）
+        smtp.connect（' smtp.sina.com '，' 25 '）
+        smtp.login（' nycht@sina.com '，' qwe1230 '）
+        smtp.sendmail（' nycht@sina.com '，' 552010694@qq.com '，STR（MSG））
+        smtp.quit（）
+    count = count + 1
+    print（“邮件发送第”，count，“次”）
+print（“邮件发送完毕，Thinks ”）
