@@ -1,0 +1,71 @@
+＃coding = utf-8
+导入urllib
+导入urllib2
+导入重新
+导入线程
+进口时间
+
+QSBK级：
+
+    def __init __（self）：
+        self.pageIndex = 1
+        self.user_agent ='Mozilla / 5.0（Windows NT 10.0; Win64; x64）'
+        self.headers = {'User-Agent'：self.user_agent}
+        self.stories = []
+        self.enable = False
+
+    def getPage（self，pageIndex）：
+        尝试：
+            url ='http://www.qiushibaike.com/hot/page/'+ str（pageIndex）
+            request = urllib2.Request（url，headers = self.headers）
+            response = urllib2.urlopen（request）
+            pageCode = response.read（）。decode（'utf-8'）
+            返回pageCode
+        除了urllib2.URLError，e：
+            如果hasattr（e，“reason”）：
+                打印“错误”，e.reason
+                返回无
+
+    def getPageItems（self，pageIndex）：
+        pageCode = self.getPage（pageIndex）
+        如果不是pageCode：
+            打印“页面加载错误”
+            返回无
+        pattern = re.compile（'h2>（。*？）</ h2。*？content“>（。*？）</.*？number”>（。*？）</'，re.S）
+        items = re.findall（pattern，pageCode）
+        pageStories = []
+        对于项目中的项目：
+            pageStories.append（[项目[0] .strip（），[1] .strip（）项[2] .strip（）]）
+        返回pageStories
+
+    def loadPage（self）：
+        如果self.enable == True：
+            如果len（self.stories）<2：
+                pageStories = self.getPageItems（self.pageIndex）
+                如果pageStories：
+                    self.stories.append（pageStories）
+                    self.pageIndex + = 1
+
+    def getOneStory（self，pageStories，page）：
+        故事在pageStories：
+            input = raw_input（）
+            self.loadPage（）
+            如果输入==“Q”：
+                self.enable = False
+                返回
+            打印您的第％d页\ t发布人：％s \ t赞：％s \ n％s“％（page，story [0]，story [2]，story [1]）
+
+    def start（self）：
+        打印u'正在读取，回车查看，Q退出'
+        self.enable = True
+        self.loadPage（）
+        nowPage = 0
+        while self.enable：
+            如果len（self.stories）> 0：
+                pageStories = self.stories [0]
+                nowPage + = 1
+                del self.stories [0]
+                self.getOneStory（pageStories，页页次）
+
+蜘蛛= QSBK（）
+spider.start（）
